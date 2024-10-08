@@ -485,5 +485,22 @@
             document.getElementById('select-imagen').style.display = 'block';
         });
     </script>
+
+<script>
+    document.addEventListener('touchstart', function(event) {
+      // Detecta si el toque está dentro del visor
+      const visor = document.querySelector('a-scene');
+      if (visor && visor.contains(event.target)) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+  
+    document.addEventListener('touchmove', function(event) {
+      const visor = document.querySelector('a-scene');
+      if (visor && visor.contains(event.target)) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+  </script>
 </body>
 </html>
