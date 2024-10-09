@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visor 360 con Botones Dinámicos</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <style>
         /* Estilos para que el selector sea parte del overlay */
         #select-imagen {
@@ -19,10 +19,40 @@
         .a-enter-vr #select-imagen {
             display: block; /* Mantén visible en modo VR */
         }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+        #start-button {
+            padding: 20px 40px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #start-button:hover {
+            background-color: #0056b3;
+        }
+        #visor-container {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+  
     </style>
 </head>
 <body>
     <!-- Definir la escena de A-Frame -->
+    <button id="start-button">Iniciar Visor 360º</button>
+    <div id="visor-container">
     <a-scene>
         <!-- Definir el cielo, que se actualizará con las imágenes -->
         <a-sky id="skybox" src="Exterior_1.jpg" rotation="0 -130 0"></a-sky>
@@ -34,7 +64,35 @@
         </a-entity>
 
     </a-scene>
+</div>
+<script>
+    document.getElementById('start-button').addEventListener('click', function() {
+      // Mostrar el visor
+      document.getElementById('start-button').style.display = 'none';
+      document.getElementById('visor-container').style.display = 'block';
 
+      // Solicitar permisos de movimiento en iOS
+      if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+        DeviceMotionEvent.requestPermission()
+          .then(response => {
+            if (response === 'granted') {
+              // Permiso concedido, iniciar el visor
+              console.log('Permiso de movimiento concedido');
+            } else {
+              alert('Permiso para usar los sensores denegado. El visor 360º puede no funcionar correctamente.');
+            }
+          })
+          .catch(error => {
+            console.error('Error al solicitar permisos de movimiento:', error);
+          });
+      } else {
+        // Navegadores que no requieren permiso
+        console.log('No se requiere permiso para sensores en este navegador.');
+      }
+    });
+  </script>
+
+    
 
     <!-- Desplegable para seleccionar la imagen -->
     <div style="position: absolute; top: 10px; left: 10px;">
