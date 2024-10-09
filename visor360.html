@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visor 360 con Botones Dinámicos</title>
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/deviceorientation-polyfill/0.0.4/deviceorientation.min.js"></script>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <style>
         /* Estilos para que el selector sea parte del overlay */
         #select-imagen {
@@ -77,13 +78,15 @@
           .then(response => {
             if (response === 'granted') {
               // Permiso concedido, iniciar el visor
-              console.log('Permiso de movimiento concedido');
+              window.addEventListener('devicemotion', () => {}, { passive: true });
+              window.addEventListener('deviceorientation', () => {}, { passive: true });
             } else {
               alert('Permiso para usar los sensores denegado. El visor 360º puede no funcionar correctamente.');
             }
           })
           .catch(error => {
             console.error('Error al solicitar permisos de movimiento:', error);
+            alert('Ocurrió un error al solicitar permisos de sensores.');
           });
       } else {
         // Navegadores que no requieren permiso
