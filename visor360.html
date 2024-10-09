@@ -78,13 +78,14 @@
           .then(response => {
             if (response === 'granted') {
               // Permiso concedido, iniciar el visor
-              window.addEventListener('devicemotion', () => {}, false);
-              window.addEventListener('deviceorientation', () => {}, false);
+              console.log('Permiso de movimiento concedido');
             } else {
               alert('Permiso para usar los sensores denegado. El visor 360º puede no funcionar correctamente.');
             }
           })
-          .catch(console.error);
+          .catch(error => {
+            console.error('Error al solicitar permisos de movimiento:', error);
+          });
       } else {
         // Navegadores que no requieren permiso
         console.log('No se requiere permiso para sensores en este navegador.');
