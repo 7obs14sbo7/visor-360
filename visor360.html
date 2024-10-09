@@ -52,7 +52,7 @@
 <body>
     <!-- Definir la escena de A-Frame -->
     <button id="start-button">Iniciar Visor 360º</button>
-    <div id="visor-container"></div>
+    <div id="visor-container">
     <a-scene>
         <!-- Definir el cielo, que se actualizará con las imágenes -->
         <a-sky id="skybox" src="Exterior_1.jpg" rotation="0 -130 0"></a-sky>
@@ -64,7 +64,7 @@
         </a-entity>
 
     </a-scene>
-
+</div>
 <script>
     document.getElementById('start-button').addEventListener('click', function() {
       // Mostrar el visor
